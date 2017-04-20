@@ -183,6 +183,12 @@ nnoremap <leader>sv :source ~/.vimrc<CR>
 
 " save session
 nnoremap <leader>s :mksession<CR>
+
+" easier split navigation
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
 " }}}
 " Fixes {{{
 " allows cursor change in tmux mode
