@@ -6,6 +6,8 @@ set noshowmode
 set laststatus=2
 set modelines=1
 set clipboard=unnamed
+set autoread
+
 " }}}
 " UI {{{
 set cursorline
@@ -17,14 +19,20 @@ set showmatch					" Show matching brace
 call plug#begin('~/.vim/plugged')
 Plug 'itchyny/lightline.vim'
 Plug 'fneu/breezy'
+Plug 'rhysd/vim-color-spring-night'
 Plug 'tpope/vim-fugitive'
 Plug 'sjl/gundo.vim'
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'Valloric/YouCompleteMe'
-Plug 'rdnetto/YCM-Generator', {'branch': 'stable'}
+" Plug 'Valloric/YouCompleteMe'
+"Plug 'rdnetto/YCM-Generator', {'branch': 'stable'}
+Plug 'ternjs/tern_for_vim', {'do': 'npm install'}
+Plug 'sheerun/vim-polyglot'
 Plug 'scrooloose/nerdtree'
+Plug 'jistr/vim-nerdtree-tabs'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'scrooloose/nerdcommenter'
+Plug 'kana/vim-submode'
+Plug 'djoshea/vim-autoread'
 Plug 'vim-scripts/a.vim'
 Plug 'fidian/hexmode'
 call plug#end()
@@ -66,7 +74,7 @@ function! LightlineFilename()
         \ (&ft == 'vimfiler' ? vimfiler#get_status_string() :
         \  &ft == 'unite' ? unite#get_status_string() :
         \  &ft == 'vimshell' ? vimshell#get_status_string() :
-        \ '' != expand('%:t') ? expand('%:t') : '[No Name]') .
+        \ '' != expand('%:t') ? expand('%:h:p') .'/'. expand('%:t') : '[No Name]') .
         \ ('' != LightlineModified() ? ' ' . LightlineModified() : '')
 endfunction
 
@@ -97,6 +105,12 @@ endfunction
 " CtrlP {{{
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
+
+" Open in new tab by default
+" let g:ctrlp_prompt_mappings = {
+    " \ 'AcceptSelection("e")': ['<2-LeftMouse>'],
+    " \ 'AcceptSelection("t")': ['<cr>'],
+    " \ }
 " }}}
 " YouCompleteMe {{{
 "let g:ycm_confirm_extra_conf = 0
@@ -118,17 +132,24 @@ autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
 
-let NERDTreeIgnore = ['\.pyc$', 'build', 'venv', 'egg', 'egg-info/', 'dist', 'docs']
+let NERDTreeIgnore = ['\.pyc$', '\.swp$', 'venv', 'egg', 'egg-info/', 'docs', 'node_modules']
 let NERDTreeQuitOnOpen=1
 let NERDTreeMinimalUI=1
 " Shortcuts
-map <c-n> :NERDTreeToggle<CR>
-nnoremap <leader>v :NERDTreeFind<CR>
+map <c-n> :NERDTreeTabsToggle<CR>
+nnoremap <leader>v :NERDTreeTabsFind<CR>
+" }}}
+" Submode {{{
+" Timeout
+let g:submode_timeout = 0
+
+" Don't consume submode exit key
+let g:submode_keep_leaving_key = 1
 " }}}
 " Color Scheme {{{
 set background=dark
-set termguicolors
-colorscheme breezy
+" set termguicolors
+colorscheme spring-night
 syntax enable
 set t_ut=
 hi CursorLine cterm=none
@@ -139,8 +160,10 @@ set number
 " Indentation {{{
 set tabstop=4
 set softtabstop=4
+set shiftwidth=4
 filetype indent on
 set autoindent
+set smartindent
 set noexpandtab
 " }}}
 " Searching {{{
@@ -190,12 +213,24 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 " }}}
+" Tabs {{{
+nnoremap <C-t> :tabnew<CR>
+nnoremap <leader>tm :tabmove<CR>
+" nnoremap <leader>n	gt
+" nnoremap <leader>p	gT
+call submode#enter_with('tabs', 'n', '', 'gn', 'gt')
+call submode#enter_with('tabs', 'n', '', 'gp', 'gT')
+call submode#map('tabs', 'n', '', 'n', 'gt')
+call submode#map('tabs', 'n', '', 'p', 'gT')
+" }}}
 " Fixes {{{
-" allows cursor change in tmux mode
+" allows cursor change
 if exists('$TMUX')
 	let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
 	let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
-else
+endif
+
+if $TERM_PROGRAM =~ "iTerm"
 	let &t_SI = "\<Esc>]50;CursorShape=1\x7"
 	let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 endif
