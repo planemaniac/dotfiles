@@ -38,9 +38,6 @@ Plug 'fidian/hexmode'
 call plug#end()
 " }}}
 " Lightline {{{
-"let g:lightline = {
-"	\ 'colorscheme': 'breezy',
-"	\}
 let g:lightline = {
       \ 'colorscheme': 'breezy',
       \ 'mode_map': { 'c': 'NORMAL' },
@@ -148,9 +145,9 @@ let g:submode_keep_leaving_key = 1
 " }}}
 " Color Scheme {{{
 set background=dark
-" set termguicolors
-colorscheme spring-night
+set termguicolors
 syntax enable
+colorscheme spring-night
 set t_ut=
 hi CursorLine cterm=none
 " }}}
