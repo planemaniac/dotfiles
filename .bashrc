@@ -35,6 +35,9 @@ colors() {
 
 [ -r /usr/share/bash-completion/bash_completion   ] && . /usr/share/bash-completion/bash_completion
 
+# Exports
+export EDITOR=vim
+
 git_branch () { git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'; }
 HOST='\033[02;36m\]\h@'
 TIME='\033[01;32m\]'
