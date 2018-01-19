@@ -35,6 +35,7 @@ Plug 'kana/vim-submode'
 Plug 'djoshea/vim-autoread'
 Plug 'vim-scripts/a.vim'
 Plug 'fidian/hexmode'
+Plug 'alvan/vim-closetag'
 call plug#end()
 " }}}
 " Lightline {{{
