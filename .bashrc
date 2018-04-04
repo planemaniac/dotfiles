@@ -35,8 +35,20 @@ colors() {
 
 [ -r /usr/share/bash-completion/bash_completion   ] && . /usr/share/bash-completion/bash_completion
 
+# Tmux
+ssh() {
+    if [ "$(ps -p $(ps -p $$ -o ppid=) -o comm=)" = "tmux" ]; then
+		tmux rename-window "$(echo $* | rev | cut -d ' ' -f1 | rev | cut -d . -f 1)"
+        command ssh "$@"
+        tmux set-window-option automatic-rename "on" 1>/dev/null
+    else
+        command ssh "$@"
+    fi
+}
+
 # Exports
 export EDITOR=vim
+export PATH=$PATH:/home/planemaniac/.local/bin
 
 git_branch () { git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'; }
 HOST='\033[02;36m\]\h@'
@@ -74,6 +86,7 @@ fi
 
 alias c++="cd ~/Dropbox/c++/"
 alias yhack="cd ~/Dropbox/yhack/"
+alias prog="cd ~/Dropbox/Programming/"
 alias py="python2"
 alias config='/usr/bin/git --git-dir=$HOME/.cfg --work-tree=$HOME'
 

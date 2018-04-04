@@ -36,6 +36,7 @@ Plug 'djoshea/vim-autoread'
 Plug 'vim-scripts/a.vim'
 Plug 'fidian/hexmode'
 Plug 'alvan/vim-closetag'
+Plug 'christoomey/vim-tmux-navigator'
 call plug#end()
 " }}}
 " Lightline {{{
@@ -104,6 +105,8 @@ endfunction
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
+
 " Open in new tab by default
 " let g:ctrlp_prompt_mappings = {
     " \ 'AcceptSelection("e")': ['<2-LeftMouse>'],
@@ -143,6 +146,10 @@ let g:submode_timeout = 0
 
 " Don't consume submode exit key
 let g:submode_keep_leaving_key = 1
+" }}}
+" CloseTag {{{
+let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.vue,*.jsx'
+let g:closetag_close_shortcut = '<leader>>'
 " }}}
 " Color Scheme {{{
 set background=dark
