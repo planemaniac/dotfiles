@@ -212,6 +212,9 @@ nnoremap <leader>sv :source ~/.vimrc<CR>
 " save session
 nnoremap <leader>s :mksession<CR>
 
+"Remove all trailing whitespace by pressing F5
+nnoremap <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>
+
 " easier split navigation
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
