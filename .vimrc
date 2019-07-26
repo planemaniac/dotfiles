@@ -133,7 +133,7 @@ autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
 
-let NERDTreeIgnore = ['\.pyc$', '\.swp$', 'venv', 'egg', 'egg-info/', 'docs', 'node_modules']
+let NERDTreeIgnore = ['\.pyc$', '\.pyo$', '\.swp$', 'venv', 'egg', 'egg-info/', 'docs', 'node_modules', '__pycache__']
 let NERDTreeQuitOnOpen=1
 let NERDTreeMinimalUI=1
 " Shortcuts
@@ -164,12 +164,14 @@ set number
 " }}}
 " Indentation {{{
 set tabstop=4
-set softtabstop=4
+set softtabstop=0
 set shiftwidth=4
-filetype indent on
 set autoindent
 set smartindent
 set noexpandtab
+
+" Fix python auto set
+let g:python_recommended_style=0
 " }}}
 " Searching {{{
 set ignorecase
@@ -209,6 +211,9 @@ nnoremap <leader>ev :vsp ~/.vimrc<CR>
 nnoremap <leader>eb :vsp ~/.bashrc<CR>
 nnoremap <leader>sv :source ~/.vimrc<CR>
 
+" Toggle numbers
+nnoremap <leader>n :set number!<CR>
+
 " save session
 nnoremap <leader>s :mksession<CR>
 
@@ -242,6 +247,9 @@ if $TERM_PROGRAM =~ "iTerm"
 	let &t_SI = "\<Esc>]50;CursorShape=1\x7"
 	let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 endif
+
+" Fix backspace
+set backspace=indent,eol,start
 " }}}
 " Autogroup {{{
 " set filetype specific settings
@@ -263,6 +271,7 @@ augroup configgroup
     autocmd FileType ruby setlocal softtabstop=2
     autocmd FileType ruby setlocal commentstring=#\ %s
     autocmd FileType python setlocal commentstring=#\ %s
+    autocmd FileType python setlocal foldmethod=indent
     autocmd BufEnter *.cls setlocal filetype=java
     autocmd BufEnter *.zsh-theme setlocal filetype=zsh
     autocmd BufEnter Makefile setlocal noexpandtab
