@@ -51,12 +51,12 @@ export EDITOR=vim
 export PATH=$PATH:/home/planemaniac/.local/bin
 
 git_branch () { git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'; }
-HOST='\[\033[02;36m\]\h\]@'
+HOST='\[\033[02;36m\]\]`whoami` '
 TIME='\[\033[01;32m\]'
-LOCATION='\[\033[01;34m\]`pwd | sed "s#\(/[^/]\{1,\}/[^/]\{1,\}/[^/]\{1,\}/\).*\(/[^/]\{1,\}/[^/]\{1,\}\)/\{0,1\}#\1_\2#g"`'
-BRANCH=' \[\033[00;33m\]$(git_branch)\[\033[00m\]\$ '
-PS1=$LOCATION$BRANCH
-PS2='\[\033[01;36m\]>'
+LOCATION='\[\033[01;34m\]`pwd | sed "s#^/home/$(whoami)#~#"`'
+BRANCH=' \[\033[00;33m\]$(git_branch)\[\033[00m\]\n'
+PS2='\[\033[01;32m\]> \[\033[00m\]'
+PS1=$HOST$LOCATION$BRANCH$PS2
 
 # some more ls aliases
 alias ll='ls -alF'
@@ -89,4 +89,6 @@ alias yhack="cd ~/Dropbox/yhack/"
 alias prog="cd ~/Dropbox/Programming/"
 alias py="python2"
 alias config='/usr/bin/git --git-dir=$HOME/.cfg --work-tree=$HOME'
+alias tmux='tmux -2'
 
+alias noaslr='setarch `uname -m` -R /bin/bash'
