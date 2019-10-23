@@ -7,7 +7,7 @@ set laststatus=2
 set modelines=1
 set clipboard=unnamed
 set autoread
-
+set mouse=a
 " }}}
 " UI {{{
 set cursorline
@@ -18,8 +18,8 @@ set showmatch					" Show matching brace
 " Git-Plug {{{
 call plug#begin('~/.vim/plugged')
 Plug 'itchyny/lightline.vim'
-Plug 'fneu/breezy'
-Plug 'rhysd/vim-color-spring-night'
+Plug 'cocopon/iceberg.vim'
+Plug 'gkeep/iceberg-dark'
 Plug 'tpope/vim-fugitive'
 Plug 'sjl/gundo.vim'
 Plug 'ctrlpvim/ctrlp.vim'
@@ -41,7 +41,7 @@ call plug#end()
 " }}}
 " Lightline {{{
 let g:lightline = {
-      \ 'colorscheme': 'breezy',
+      \ 'colorscheme': 'icebergDark',
       \ 'mode_map': { 'c': 'NORMAL' },
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ]
@@ -155,7 +155,7 @@ let g:closetag_close_shortcut = '<leader>>'
 set background=dark
 set termguicolors
 syntax enable
-colorscheme spring-night
+colorscheme iceberg
 set t_ut=
 hi CursorLine cterm=none
 " }}}
@@ -238,14 +238,12 @@ call submode#map('tabs', 'n', '', 'p', 'gT')
 " }}}
 " Fixes {{{
 " allows cursor change
-if exists('$TMUX')
-	let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
-	let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
-endif
-
 if $TERM_PROGRAM =~ "iTerm"
 	let &t_SI = "\<Esc>]50;CursorShape=1\x7"
 	let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+else
+	let &t_SI = "\<Esc>[6 q"
+	let &t_EI = "\<Esc>[2 q"
 endif
 
 " Fix backspace
