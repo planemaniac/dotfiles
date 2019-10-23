@@ -84,11 +84,10 @@ if [ -x /usr/bin/dircolors ]; then
 	alias lc='l --color=always'
 fi
 
-alias c++="cd ~/Dropbox/c++/"
-alias yhack="cd ~/Dropbox/yhack/"
-alias prog="cd ~/Dropbox/Programming/"
 alias py="python2"
 alias config='/usr/bin/git --git-dir=$HOME/.cfg --work-tree=$HOME'
 alias tmux='tmux -2'
 
 alias noaslr='setarch `uname -m` -R /bin/bash'
+
+source <(kitty + complete setup bash)
