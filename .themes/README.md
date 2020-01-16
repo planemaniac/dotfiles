@@ -18,6 +18,11 @@ or
 ```
 sudo apt install kitty
 ```
+### Set kitty as default terminal emulator
+```
+sudo update-alternatives --config x-terminal-emulator
+```
+Select kitty and hit enter
 
 ## Install i3-gaps in [i3-gnome-flashback](https://github.com/regolith-linux/regolith-desktop/wiki/HowTo:-Use-i3-and-Gnome-without-Regolith)
 ```
